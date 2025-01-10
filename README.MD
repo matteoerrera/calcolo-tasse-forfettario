@@ -44,4 +44,3 @@ Il progetto utilizza la CDN di Tailwind CSS per gli stili. Assicurati di avere u
 
 ## Licenza
 Questo progetto è distribuito sotto la licenza MIT. Sentiti libero di modificarlo e utilizzarlo come preferisci.
-# calcolo-tasse-forfettario
