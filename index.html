@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolatore tasse partita IVA forfettaria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+<div class="max-w-4xl mx-auto py-10">
+    <h1 class="text-3xl font-bold text-center mb-6">📊 Calcolatore tasse partita IVA forfettaria</h1>
+    <div class="bg-white shadow-md rounded-lg p-6">
+        <form id="calcolatoreForm" class="space-y-6">
+            <!-- Compensi -->
+            <div>
+                <label for="compensi" class="block text-sm font-medium">Compensi annui (€)</label>
+                <input type="number" id="compensi" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="Inserisci il compenso annuale">
+            </div>
+
+            <!-- Imposta sostitutiva -->
+            <div>
+                <label for="imposta" class="block text-sm font-medium">Imposta sostitutiva (%)</label>
+                <select id="imposta" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                    <option value="0.05">5% (per i primi 5 anni)</option>
+                    <option value="0.15">15% (dopo 5 anni)</option>
+                </select>
+                <p class="text-sm text-gray-500 mt-1">⚠️ Se hai aperto la partita IVA da meno di 5 anni, seleziona 5%, altrimenti 15%.</p>
+            </div>
+
+            <!-- Percentuale forfettario -->
+            <div>
+                <label for="forfettario" class="block text-sm font-medium">Percentuale forfettario (%)</label>
+                <input type="number" id="forfettario" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" value="67">
+                <p class="text-sm text-gray-500 mt-1">Dipende dal codice ATECO, ma generalmente è 67%.</p>
+            </div>
+
+            <!-- Contributi previdenziali -->
+            <div>
+                <label for="contributi" class="block text-sm font-medium">Contributi previdenziali (%)</label>
+                <input type="number" id="contributi" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" value="25.98">
+                <p class="text-sm text-gray-500 mt-1">Generalmente 25,98%. Evita di modificarlo.</p>
+            </div>
+
+            <button type="button" id="calcola" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">Calcola</button>
+
+            <!-- Risultati -->
+            <div id="risultati" class="mt-6 hidden">
+                <h2 class="text-xl font-bold mb-4">🧮 Risultati:</h2>
+                <p><strong>Reddito imponibile lordo:</strong> <span id="imponibileLordo"></span> €</p>
+                <p><strong>Contributi previdenziali:</strong> <span id="contributiCalcolati"></span> €</p>
+                <p><strong>Reddito imponibile netto:</strong> <span id="imponibileNetto"></span> €</p>
+                <p><strong>Imposta sostitutiva:</strong> <span id="impostaCalcolata"></span> €</p>
+                <p><strong>Totale dovuto nell'anno:</strong> <span id="totaleDovuto"></span> €</p>
+                <p><strong>Percentuale carico fiscale:</strong> <span id="caricoFiscale"></span>%</p>
+                <p><strong>Netto:</strong> <span id="netto"></span> €</p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('calcola').addEventListener('click', () => {
+        const compensi = parseFloat(document.getElementById('compensi').value) || 0;
+        const imposta = parseFloat(document.getElementById('imposta').value) || 0;
+        const forfettario = parseFloat(document.getElementById('forfettario').value) / 100 || 0;
+        const contributi = parseFloat(document.getElementById('contributi').value) / 100 || 0;
+
+        // Calcoli
+        const imponibileLordo = compensi * forfettario;
+        const contributiCalcolati = imponibileLordo * contributi;
+        const imponibileNetto = imponibileLordo - contributiCalcolati;
+        const impostaCalcolata = imponibileNetto * imposta;
+        const totaleDovuto = contributiCalcolati + impostaCalcolata;
+        const caricoFiscale = (totaleDovuto / compensi) * 100;
+        const netto = compensi - totaleDovuto;
+
+        // Mostra risultati
+        document.getElementById('imponibileLordo').textContent = imponibileLordo.toFixed(2);
+        document.getElementById('contributiCalcolati').textContent = contributiCalcolati.toFixed(2);
+        document.getElementById('imponibileNetto').textContent = imponibileNetto.toFixed(2);
+        document.getElementById('impostaCalcolata').textContent = impostaCalcolata.toFixed(2);
+        document.getElementById('totaleDovuto').textContent = totaleDovuto.toFixed(2);
+        document.getElementById('caricoFiscale').textContent = caricoFiscale.toFixed(2);
+        document.getElementById('netto').textContent = netto.toFixed(2);
+
+        document.getElementById('risultati').classList.remove('hidden');
+    });
+</script>
+</body>
+</html>
