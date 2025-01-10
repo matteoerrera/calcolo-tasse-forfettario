@@ -30,7 +30,7 @@ Il progetto è contenuto in un unico file HTML con tutto il codice incorporato:
 - **Logica di calcolo**: Implementata in JavaScript per aggiornamenti dinamici basati sugli input dell'utente.
 
 ## Istruzioni per l'uso
-1. Scarica il file `calcolatore_tasse.html`.
+1. Scarica il file `index.html`.
 2. Apri il file in un browser web moderno (es. Chrome, Firefox, Edge).
 3. Inserisci i dati richiesti nei campi del calcolatore.
 4. Clicca su "Calcola" per visualizzare i risultati.
